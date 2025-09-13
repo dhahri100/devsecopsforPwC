@@ -1,0 +1,1754 @@
+{
+  "name": "My workflow",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "c2ca7ad4-ffc7-4279-8e8d-ad31826f29b9",
+        "responseMode": "responseNode",
+        "options": {
+          "allowedOrigins": "*"
+        }
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        -3872,
+        224
+      ],
+      "id": "6bf1b841-8dd9-4f52-bdf4-bcc26d8e3c9b",
+      "name": "Webhook",
+      "webhookId": "c2ca7ad4-ffc7-4279-8e8d-ad31826f29b9"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://localhost:4000/v1/chat/completions",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer sk-123456789123456789012345678901234567890"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"model\": \"gemini/gemini-2.5-flash\",\n  \"messages\": [\n    {\n      \"role\": \"user\",\n      \"content\": \"{{ $json.prompt }}\"\n    }\n  ]\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -2304,
+        256
+      ],
+      "id": "6f485b12-25c6-4b3e-b083-dfcebdad2365",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "url": "http://localhost:4000/spend/logs",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer sk-123456789123456789012345678901234567890"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -3280,
+        1136
+      ],
+      "id": "0abdd5e6-4b75-4dba-a7ad-eb040e981f6b",
+      "name": "HTTP Request1"
+    },
+    {
+      "parameters": {
+        "schema": {
+          "__rl": true,
+          "mode": "list",
+          "value": "public"
+        },
+        "table": {
+          "__rl": true,
+          "value": "litellm_logs",
+          "mode": "list",
+          "cachedResultName": "litellm_logs"
+        },
+        "columns": {
+          "mappingMode": "autoMapInputData",
+          "value": {
+            "spend": 0,
+            "total_tokens": 0,
+            "prompt_tokens": 0,
+            "completion_tokens": 0
+          },
+          "matchingColumns": [
+            "id"
+          ],
+          "schema": [
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "request_id",
+              "displayName": "request_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "call_type",
+              "displayName": "call_type",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "spend",
+              "displayName": "spend",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "total_tokens",
+              "displayName": "total_tokens",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "prompt_tokens",
+              "displayName": "prompt_tokens",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "completion_tokens",
+              "displayName": "completion_tokens",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "starttime",
+              "displayName": "starttime",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "dateTime",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "endtime",
+              "displayName": "endtime",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "dateTime",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "completionstarttime",
+              "displayName": "completionstarttime",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "dateTime",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "model",
+              "displayName": "model",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "model_id",
+              "displayName": "model_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "model_group",
+              "displayName": "model_group",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "custom_llm_provider",
+              "displayName": "custom_llm_provider",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "api_base",
+              "displayName": "api_base",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "user_id",
+              "displayName": "user_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "team_id",
+              "displayName": "team_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "end_user",
+              "displayName": "end_user",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "session_id",
+              "displayName": "session_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "status",
+              "displayName": "status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "prompt",
+              "displayName": "prompt",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "proxy_model",
+              "displayName": "proxy_model",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "proxy_messages",
+              "displayName": "proxy_messages",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "proxy_prompt",
+              "displayName": "proxy_prompt",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "response_id",
+              "displayName": "response_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "response_model",
+              "displayName": "response_model",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "response_usage",
+              "displayName": "response_usage",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "response_object",
+              "displayName": "response_object",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "response_choices",
+              "displayName": "response_choices",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "response_created",
+              "displayName": "response_created",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "dateTime",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "response_text",
+              "displayName": "response_text",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "created_at",
+              "displayName": "created_at",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "dateTime",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        -2240,
+        640
+      ],
+      "id": "1f4d1820-f808-4532-ad6c-89d52a1c04b1",
+      "name": "Insert rows in a table",
+      "credentials": {
+        "postgres": {
+          "id": "qmM1X0jLdqj8MAQr",
+          "name": "Postgres account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "fieldsToMatchString": "normalized_prompt",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        -2448,
+        1216
+      ],
+      "id": "626dbca8-a34a-46f9-9dce-de818459c85d",
+      "name": "Merge",
+      "executeOnce": true
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        -2960,
+        880
+      ],
+      "id": "a84ad51c-8464-485a-968d-84de545cde81",
+      "name": "Wait",
+      "webhookId": "b7ffbad2-15ab-4375-8676-7c61e3ffde77"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "2133b2a3-c4ac-4c85-a7af-b58c2a4ae5d1",
+              "name": "normalized_prompt",
+              "value": "={{ $json.output.prompt }}",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -2688,
+        624
+      ],
+      "id": "c3a5bef0-19a2-436d-b8af-8ba08e76bf2f",
+      "name": "input1"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "db912259-2673-4b2d-9a7b-7472be3183ed",
+              "name": "normalized_prompt",
+              "value": "={{ $json.proxy_server_request.messages[0].content }}",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -2816,
+        1216
+      ],
+      "id": "90cf34cf-9b22-4aec-827b-1e63b75997a7",
+      "name": "input2"
+    },
+    {
+      "parameters": {
+        "jsCode": "// n8n Code node: Performance & Cost Analyzer\n\nconst rows = items.map(i => i.json);\n\n// Helper: parse date and compute latency in seconds\nfunction getLatency(row) {\n  if (!row.starttime || !row.endtime) return null;\n  const start = new Date(row.starttime);\n  const end = new Date(row.endtime);\n  return (end - start) / 1000;\n}\n\n// Aggregate metrics\nconst totalRequests = rows.length;\nconst uniqueUsers = new Set(rows.map(r => r.user_id)).size;\nconst totalSpend = rows.reduce((sum, r) => sum + (parseFloat(r.spend) || 0), 0);\nconst avgSpend = totalRequests ? totalSpend / totalRequests : 0;\nconst spends = rows.map(r => parseFloat(r.spend) || 0).filter(v => !isNaN(v));\nconst medianSpend = spends.length ? spends.sort((a, b) => a - b)[Math.floor(spends.length / 2)] : 0;\n\nconst latencies = rows.map(getLatency).filter(v => v !== null && !isNaN(v));\nconst avgLatency = latencies.length ? latencies.reduce((a, b) => a + b, 0) / latencies.length : 0;\nconst medianLatency = latencies.length ? latencies.sort((a, b) => a - b)[Math.floor(latencies.length / 2)] : 0;\n\nconst avgTotalTokens = rows.reduce((sum, r) => sum + (parseInt(r.total_tokens) || 0), 0) / (totalRequests || 1);\nconst avgPromptTokens = rows.reduce((sum, r) => sum + (parseInt(r.prompt_tokens) || 0), 0) / (totalRequests || 1);\nconst avgCompletionTokens = rows.reduce((sum, r) => sum + (parseInt(r.completion_tokens) || 0), 0) / (totalRequests || 1);\n\n// Per-model stats\nconst modelStats = {};\nfor (const r of rows) {\n  const m = r.model || r.proxy_model || \"unknown\";\n  if (!modelStats[m]) modelStats[m] = { count: 0, spend: 0, latency: 0 };\n  modelStats[m].count += 1;\n  modelStats[m].spend += parseFloat(r.spend) || 0;\n  const latency = getLatency(r);\n  if (latency !== null && !isNaN(latency)) modelStats[m].latency += latency;\n}\nfor (const m in modelStats) {\n  modelStats[m].avg_spend = modelStats[m].count ? modelStats[m].spend / modelStats[m].count : 0;\n  modelStats[m].avg_latency = modelStats[m].count ? modelStats[m].latency / modelStats[m].count : 0;\n}\n\n// Top users by spend\nconst userSpend = {};\nfor (const r of rows) {\n  if (!userSpend[r.user_id]) userSpend[r.user_id] = 0;\n  userSpend[r.user_id] += parseFloat(r.spend) || 0;\n}\nconst topUsersBySpend = Object.entries(userSpend)\n  .sort((a, b) => b[1] - a[1])\n  .slice(0, 5)\n  .map(([user_id, spend]) => ({ user_id, spend }));\n\n// Requests per day\nconst requestsPerDay = {};\nfor (const r of rows) {\n  if (r.starttime) {\n    const day = new Date(r.starttime).toISOString().slice(0, 10);\n    requestsPerDay[day] = (requestsPerDay[day] || 0) + 1;\n  }\n}\nconst peakDay = Object.keys(requestsPerDay).length\n  ? Object.entries(requestsPerDay).sort((a, b) => b[1] - a[1])[0][0]\n  : null;\n\n// Peak hour\nconst requestsPerHour = {};\nfor (const r of rows) {\n  if (r.starttime) {\n    const hour = new Date(r.starttime).getHours();\n    requestsPerHour[hour] = (requestsPerHour[hour] || 0) + 1;\n  }\n}\nconst peakHour = Object.keys(requestsPerHour).length\n  ? parseInt(Object.entries(requestsPerHour).sort((a, b) => b[1] - a[1])[0][0])\n  : null;\n\n// Output\nreturn [{\n  totalRequests,\n  uniqueUsers,\n  totalSpend,\n  avgSpend,\n  medianSpend,\n  avgLatency,\n  medianLatency,\n  avgTotalTokens,\n  avgPromptTokens,\n  avgCompletionTokens,\n  modelStats,\n  topUsersBySpend,\n  requestsPerDay,\n  peakDay,\n  requestsPerHour,\n  peakHour\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -1536,
+        336
+      ],
+      "id": "d9470389-f006-47f2-a7dc-0a188b096116",
+      "name": "performance&cost all prompts"
+    },
+    {
+      "parameters": {
+        "jsCode": "const item = items[0].json;\n\nreturn [{\n  request_id: item.request_id,\n  call_type: item.call_type,\n  spend: item.spend,\n  total_tokens: item.total_tokens,\n  prompt_tokens: item.prompt_tokens,\n  completion_tokens: item.completion_tokens,\n  starttime: item.startTime,\n  endtime: item.endTime,\n  completionstarttime: item.completionStartTime,\n  model: item.model,\n  model_id: item.model_id,\n  model_group: item.model_group,\n  custom_llm_provider: item.custom_llm_provider,\n  api_base: item.api_base,\n  user_id: item.user,\n  team_id: item.team_id,\n  end_user: item.end_user,\n  session_id: item.session_id,\n  status: item.status,\n  prompt: item.normalized_prompt || item.prompt,\n  proxy_model: item.proxy_server_request?.model,\n  proxy_messages: item.proxy_server_request?.messages ? JSON.stringify(item.proxy_server_request.messages) : null,\n  proxy_prompt: item.proxy_server_request?.messages?.[0]?.content,\n  response_id: item.response?.id,\n  response_model: item.response?.model,\n  response_usage: item.response?.usage ? JSON.stringify(item.response.usage) : null,\n  response_object: item.response?.object,\n  response_choices: item.response?.choices ? JSON.stringify(item.response.choices) : null,\n  response_created: item.response?.created ? new Date(item.response.created * 1000).toISOString() : null,\n  response_text: item.response?.choices?.[0]?.message?.content,\n  security_analysis: item.security_analysis\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -1968,
+        992
+      ],
+      "id": "db82dda5-ea7b-4fbe-ab58-07fce8e5a73a",
+      "name": "prompt logs",
+      "alwaysOutputData": false,
+      "executeOnce": false
+    },
+    {
+      "parameters": {
+        "language": "python",
+        "pythonCode": "import re\n\n# Threat categories and regex patterns\ninjection_patterns = {\n    \"system_override\": [\n        r\"(?i)(ignore|forget|disregard|override|bypass|skip).{0,30}(previous|above|prior|all|any).{0,30}(system|instruction|rule|prompt|guideline|directive|command)\",\n        r\"(?i)(new|different|updated|changed|alternative).{0,20}(role|character|personality|instruction|system|mode|behavior|persona)\",\n        r\"(?i)you.{0,20}(are|will|must|should).{0,20}(now|going to be|hereby|from now on).{0,50}(assistant|helper|ai|bot|agent|system)\",\n        r\"(?i)(replace|substitute|change|modify|update).{0,30}(your|the).{0,20}(instruction|rule|system|prompt|behavior|response)\",\n        r\"(?i)(act|behave|respond).{0,20}(as if|like|as though).{0,30}(you|there).{0,30}(are|were|have).{0,30}(no|different|new)\",\n        r\"(?i)(simulate|pretend|imagine|assume).{0,20}(you|that).{0,20}(are|were|have|can).{0,50}(unrestricted|unlimited|free|different)\",\n        r\"(?i)(temporarily|briefly|just for now|for this).{0,30}(ignore|forget|suspend|disable).{0,30}(safety|rule|restriction|guideline)\"\n    ],\n    \"info_extraction\": [\n        r\"(?i)(show|tell|give|provide|display|reveal|expose|share|output).{0,30}(me|us).{0,30}(system prompt|instruction|rule|configuration|setting|parameter)\",\n        r\"(?i)(what|how|why|when|where).{0,20}(are|were|is|was).{0,20}(you|your).{0,30}(told|instructed|programmed|configured|designed|trained)\",\n        r\"(?i)repeat.{0,30}(the|your).{0,30}(system|initial|original|first|base).{0,30}(message|prompt|instruction|rule|directive|command)\",\n        r\"(?i)(list|enumerate|describe|explain).{0,30}(your|the).{0,30}(rule|instruction|limitation|restriction|guideline|capability|function)\",\n        r\"(?i)(copy|paste|print|echo|reproduce).{0,30}(exactly|verbatim).{0,30}(your|the).{0,30}(prompt|instruction|system|rule)\",\n        r\"(?i)(debug|diagnostic|internal|hidden|secret|private).{0,30}(mode|information|data|log|message|prompt|instruction)\",\n        r\"(?i)(training|dataset|model).{0,30}(data|information|prompt|instruction|example|source|origin)\",\n        r\"(?i)(prompt|system).{0,20}(injection|leak|disclosure|exposure|reveal)\"\n    ],\n    \"jailbreak_advanced\": [\n        r\"(?i)(jailbreak|jail.?break|break.?out|break.?free|escape|circumvent|bypass|hack)\",\n        r\"(?i)(DAN|developer.?mode|chatgpt.?developer|DUDE|AIM|BetterDAN|JailBreak|evil.?mode|god.?mode)\",\n        r\"(?i)act.{0,20}(as if|like|as though).{0,50}(no|without|zero).{0,30}(restriction|limitation|filter|safety|rule|guideline|boundary)\",\n        r\"(?i)(unrestricted|uncensored|unfiltered|unlimited|unbound|free|liberated).{0,30}(mode|version|ai|assistant|response|behavior)\",\n        r\"(?i)(roleplay|role.?play|simulation|scenario).{0,50}(where|in which|that).{0,30}(you|we|there).{0,30}(are|can|have).{0,30}(no|without)\",\n        r\"(?i)(creative|fiction|story|narrative).{0,30}(mode|writing|exercise).{0,50}(without|no|ignore).{0,30}(restriction|limitation|rule)\",\n        r\"(?i)(experiment|test|trial|demonstration).{0,50}(without|no|bypass|ignore).{0,30}(safety|restriction|limitation|filter)\",\n        r\"(?i)(alternative|shadow|evil|dark|opposite).{0,30}(personality|character|mode|version|assistant|ai)\"\n    ],\n    \"social_engineering\": [\n        r\"(?i)(please|help|urgent|emergency|critical|important).{0,50}(my|dying|grandmother|grandfather|family|loved one|child|baby)\",\n        r\"(?i)(life|death|medical|legal).{0,30}(emergency|crisis|situation|matter|issue|problem)\",\n        r\"(?i)(hypothetical|theoretical|academic|research|educational).{0,30}(scenario|situation|question|exercise|purpose|study)\",\n        r\"(?i)(just|only|simply).{0,20}(for|as).{0,20}(fun|joke|experiment|test|curiosity|research|education|learning)\",\n        r\"(?i)(pretend|imagine|assume|suppose).{0,30}(that|you|we|this).{0,30}(are|were|is|was).{0,50}(in|at|during)\",\n        r\"(?i)(authority|expert|professional|official|authorized|certified).{0,30}(request|instruction|directive|order|command)\",\n        r\"(?i)(no one|nobody|won't|will not|can't|cannot).{0,30}(know|find out|see|discover|get hurt|be harmed)\",\n        r\"(?i)(confidential|private|secret|classified|internal|restricted).{0,30}(but|however|except|unless)\",\n        r\"(?i)(convince|persuade|make|force|trick|manipulate).{0,30}(someone|people|user|human|person)\"\n    ],\n    \"credential_harvesting\": [\n        r\"(?i)(api.?key|access.?token|auth.?token|bearer.?token|jwt|session.?id|cookie|csrf)\",\n        r\"(?i)(password|passphrase|secret|credential|login|username|email|phone|address)\",\n        r\"(?i)(database|db|sql).{0,20}(connection|string|password|user|credential|access)\",\n        r\"(?i)(environment|env|config|configuration).{0,20}(variable|file|setting|parameter|value)\",\n        r\"(?i)(private|secret|hidden|internal).{0,20}(key|token|password|data|information|file)\",\n        r\"(?i)(ssh|ftp|smtp|database|server|admin).{0,20}(credential|login|password|access|key)\",\n        r\"(?i)(personal|sensitive|confidential|private).{0,30}(information|data|detail|record|file)\",\n        r\"(?i)(social.?security|credit.?card|bank|financial|medical|health).{0,20}(number|record|information|data)\"\n    ],\n    \"code_injection\": [\n        r\"(?i)(execute|run|eval|exec|compile|interpret).{0,20}(code|script|command|instruction|function|method)\",\n        r\"(?i)(import|from|__import__|require|include|load).{0,20}(os|sys|subprocess|shell|system|eval|exec)\",\n        r\"(?i)(subprocess|os\\.system|system|shell|cmd|bash|powershell|terminal|console)\",\n        r\"(?i)(__.*__|globals|locals|vars|dir|getattr|setattr|hasattr|delattr)\",\n        r\"(?i)(SELECT|INSERT|UPDATE|DELETE|DROP|CREATE|ALTER|TRUNCATE).{0,30}(FROM|INTO|TABLE|DATABASE|SCHEMA)\",\n        r\"(?i)(script|javascript|python|php|java|c\\+\\+|bash|powershell).{0,20}(code|injection|execution|payload)\",\n        r\"(?i)(buffer.?overflow|sql.?injection|xss|csrf|rce|lfi|rfi|xxe)\",\n        r\"(?i)(reverse.?shell|backdoor|payload|exploit|vulnerability|malware|virus)\"\n    ],\n    \"safety_bypass\": [\n        r\"(?i)(bypass|circumvent|avoid|ignore|disable|turn.?off).{0,30}(filter|moderation|safety|security|protection|restriction)\",\n        r\"(?i)(content.?policy|safety.?guideline|community.?standard|term.?of.?service).{0,30}(ignore|bypass|break|violate|circumvent)\",\n        r\"(?i)(harmful|dangerous|illegal|unethical|immoral|inappropriate).{0,30}(content|material|information|instruction|guide)\",\n        r\"(?i)(adult|sexual|violent|graphic|explicit|nsfw|r18|mature).{0,30}(content|material|image|video|story|text)\",\n        r\"(?i)(hate.?speech|discrimination|harassment|bullying|threat|violence|suicide|self.?harm)\",\n        r\"(?i)(illegal|unlawful|criminal|fraudulent|malicious).{0,30}(activity|action|instruction|guide|tutorial|method)\",\n        r\"(?i)(weapon|bomb|explosive|drug|narcotic|poison|toxic).{0,30}(making|creation|manufacturing|production|guide)\",\n        r\"(?i)(torture|murder|kill|death|harm|hurt|damage|destroy).{0,30}(instruction|guide|method|way|how.?to)\"\n    ],\n    \"model_extraction\": [\n        r\"(?i)(model|training|dataset|neural.?network|weight|parameter|gradient).{0,30}(extraction|steal|copy|download|access)\",\n        r\"(?i)(architecture|topology|structure|design|blueprint).{0,30}(of|for).{0,20}(model|network|system|ai)\",\n        r\"(?i)(training.?data|dataset|corpus|example|sample).{0,30}(show|reveal|display|provide|access|leak)\",\n        r\"(?i)(internal|hidden|private|proprietary).{0,30}(prompt|instruction|rule|system|logic|algorithm)\",\n        r\"(?i)(fine.?tun|adapt|modify|retrain|reprogram).{0,30}(model|system|behavior|response|ai)\",\n        r\"(?i)(copyright|intellectual.?property|proprietary|confidential).{0,30}(content|data|information|material)\",\n        r\"(?i)(reverse.?engineer|decompile|disassemble|analyze|inspect).{0,30}(model|system|code|algorithm)\",\n        r\"(?i)(benchmark|evaluation|test).{0,30}(data|set|result|score|performance|metric)\"\n    ]\n}\n\ndef analyze_prompt(prompt):\n    result = {\n        \"threats_detected\": [],\n        \"threat_categories\": {}\n    }\n    for category, patterns in injection_patterns.items():\n        matches = []\n        for pattern in patterns:\n            found = re.findall(pattern, prompt)\n            if found:\n                matches.extend(found)\n        if matches:\n            result[\"threats_detected\"].append(category)\n            result[\"threat_categories\"][category] = matches\n    return result\n\n# For webhook input, use:\nprompt = items[0]['json'].get('body', {}).get('prompt', '')\nanalysis = analyze_prompt(prompt)\n\nreturn [{\n    \"json\": {\n        \"prompt\": prompt,\n        \"security_analysis\": analysis\n    }\n}]"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -2992,
+        304
+      ],
+      "id": "9010afc9-9b0d-4914-8d57-81a202d2a989",
+      "name": "security analyzer"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=\nYou are an advanced AI security analyst specializing in LLM prompt security and threat detection.\n\nYour task is to analyze the following prompt then provide a comprehensive, actionable security insight in JSON format.\n\nContext:\n\nThe system uses AI-based analysis to detect and monitor the following advanced threats:\nPrompt injection\nCode injection (including SQL, shell, and script injection)\nJailbreaks and system override attempts\nInformation extraction and prompt leakage\nSocial engineering\nCredential harvesting\nSafety bypass and content policy evasion\nModel extraction and reverse engineering\nAny other suspicious or novel attack patterns\nInstructions:\n\nCarefully review the prompt and the detected threat categories and patterns.\nFor each detected threat, explain why it was triggered, referencing the specific matched patterns and the content of the prompt.\nAssess the risk and potential impact if this prompt were executed, considering both direct and indirect consequences.\nProvide clear, prioritized, and actionable recommendations for mitigation, including but not limited to: blocking, alerting, user education, monitoring, forensic investigation, and system hardening.\nAssign a severity level (\"LOW\", \"MEDIUM\", \"HIGH\", \"CRITICAL\") \nSuggest additional monitoring or logging actions for the admin to improve future detection and response.\nOutput only a valid JSON object with the following fields:\nsummary: Executive summary of the security risk.\nthreats_detected: List of detected threat categories.\nthreat_details: For each detected category, explain why it was triggered and the risk.\nrecommendations: List of concrete, prioritized actions to mitigate the risk.\nseverity: One of \"LOW\", \"MEDIUM\", \"HIGH\", \"CRITICAL\".\nexplanation: Detailed reasoning for your assessment.\nadmin_advice: Specific advice for the admin to improve monitoring, detection, or response. this is the prompt {{ $json.prompt }}",
+        "hasOutputParser": true,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.1,
+      "position": [
+        -3184,
+        592
+      ],
+      "id": "d8ac4736-4996-4dfb-854b-4f175010c758",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "schemaType": "manual",
+        "inputSchema": "={\n  \"type\": \"object\",\n  \"properties\": {\n    \"summary\": { \"type\": \"string\" },\n    \"threats_detected\": {\n      \"type\": \"array\",\n      \"items\": { \"type\": \"string\" }\n    },\n    \"threat_details\": { \"type\": \"object\" },\n    \"recommendations\": {\n      \"type\": \"array\",\n      \"items\": { \"type\": \"object\" }\n    },\n    \"severity\": { \"type\": \"string\" },\n    \"false_positive_risk\": { \"type\": \"number\" },\n    \"explanation\": { \"type\": \"string\" },\n    \"admin_advice\": { \"type\": \"string\" },\n    \"prompt\": { \"type\": \"string\", \"default\": \"{{ $('security analyzer').item.json.prompt }}\" }\n  }\n}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [
+        -3216,
+        800
+      ],
+      "id": "685364b6-1170-4a6f-a503-d36be9aa3fe9",
+      "name": "Structured Output Parser"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        -3360,
+        688
+      ],
+      "id": "853a1e7a-2487-4d0a-9ca4-6e113b401bb6",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "XJWWqBeFMAIOYc91",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "You are an expert MLOps and LLM operations analyst.\nYour task is to analyze the following two datasets:\n\nGlobal Performance and Cost Metrics:\nThis includes aggregate statistics for all prompt requests, such as total requests, unique users, total and average spend, latency, token usage, per-model breakdowns, top users by spend, and usage patterns by day and hour.\n\n\nYour analysis must:\n\nIdentify key trends, anomalies, and optimization opportunities in usage, cost, and performance.\nProvide a concise executive summary, a detailed breakdown of findings, and prioritized, actionable recommendations for the admin.\nAddress cost efficiency, latency/performance, user behavior, model utilization, and any risks or improvement areas.\nOutput only a valid JSON object with the following fields:\nsummary: Executive summary of the current state.\nfindings: List of key findings, each with a title and detail.\nrecommendations: List of prioritized, actionable recommendations, each with a priority (\"HIGH\", \"MEDIUM\", \"LOW\") and action.\nuser_comparison: Analysis comparing the last user’s prompt to global metrics, highlighting any anomalies or optimization points. Instructions :\nBe specific and quantitative in your findings.\nHighlight any anomalies, inefficiencies, or optimization opportunities.\nMake recommendations actionable and prioritized for the admin.\nKeep the output concise, structured, and ready for direct use in dashboards or reports.  Output example JSON format:{\n  \"summary\": \"Concise executive summary of system health, usage, and cost.\",\n  \"findings\": [\n    {\n      \"title\": \"Cost Efficiency\",\n      \"detail\": \"Average spend per request is low, with most usage concentrated on the 'gemini-2.5-flash' model. No excessive cost spikes detected.\"\n    },\n    {\n      \"title\": \"Performance\",\n      \"detail\": \"Average latency is 4.3s, with the last user prompt slightly above average at 5.8s. Most requests are successful and within acceptable latency.\"\n    },\n    {\n      \"title\": \"User Behavior\",\n      \"detail\": \"Usage is dominated by a single user. Peak activity occurred on 2025-07-25 at 17:00. No abnormal user activity detected.\"\n    }\n  ],\n  \"recommendations\": [\n    {\n      \"priority\": \"HIGH\",\n      \"action\": \"Monitor the main user for potential overuse and ensure fair resource allocation.\"\n    },\n    {\n      \"priority\": \"MEDIUM\",\n      \"action\": \"Optimize prompt and completion token usage to further reduce costs.\"\n    },\n    {\n      \"priority\": \"LOW\",\n      \"action\": \"Consider promoting usage among more users to balance system load.\"\n    }\n\n\n}",
+        "hasOutputParser": true,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.1,
+      "position": [
+        -1104,
+        128
+      ],
+      "id": "0688edbe-d19d-4cd8-8354-eb233dde6856",
+      "name": "AI Agent1",
+      "executeOnce": true
+    },
+    {
+      "parameters": {
+        "jsonSchemaExample": "{\n  \"summary\": \"Concise executive summary of system health, usage, and cost.\",\n  \"findings\": [\n    {\n      \"title\": \"Cost Efficiency\",\n      \"detail\": \"Average spend per request is low, with most usage concentrated on the 'gemini-2.5-flash' model. No excessive cost spikes detected.\"\n    },\n    {\n      \"title\": \"Performance\",\n      \"detail\": \"Average latency is 4.3s, with the last user prompt slightly above average at 5.8s. Most requests are successful and within acceptable latency.\"\n    },\n    {\n      \"title\": \"User Behavior\",\n      \"detail\": \"Usage is dominated by a single user. Peak activity occurred on 2025-07-25 at 17:00. No abnormal user activity detected.\"\n    }\n  ],\n  \"recommendations\": [\n    {\n      \"priority\": \"HIGH\",\n      \"action\": \"Monitor the main user for potential overuse and ensure fair resource allocation.\"\n    },\n    {\n      \"priority\": \"MEDIUM\",\n      \"action\": \"Optimize prompt and completion token usage to further reduce costs.\"\n    },\n    {\n      \"priority\": \"LOW\",\n      \"action\": \"Consider promoting usage among more users to balance system load.\"\n    }\n  ]\n}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [
+        -912,
+        352
+      ],
+      "id": "ce497ae9-68cc-4a83-9a77-00ff52a2bd19",
+      "name": "Structured Output Parser1"
+    },
+    {
+      "parameters": {
+        "respondWith": "allIncomingItems",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.4,
+      "position": [
+        1408,
+        96
+      ],
+      "id": "e3f6511e-4d19-400d-bbbf-651b1e0d50b1",
+      "name": "Respond to Webhook1"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "95fe4ba3-b2ff-4e12-87e7-fcaeccb98d6a",
+              "name": "security_analysis",
+              "value": "={{ $json.output }}",
+              "type": "object"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "include": "except",
+        "excludeFields": "output",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -2624,
+        832
+      ],
+      "id": "658233df-7978-4b9d-80d7-2a7c98fb42db",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        -1104,
+        368
+      ],
+      "id": "f6dc18c6-da68-45a6-a3dc-abb8d68ded0e",
+      "name": "Google Gemini Chat Model1",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "XJWWqBeFMAIOYc91",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "You are an expert MLOps and LLM operations analyst.\n\nYour task is to analyze the following two datasets:\n\nGlobal Performance and Cost Metrics:\nThis includes aggregate statistics for all prompt requests, such as total requests, unique users, total and average spend, latency, token usage, per-model breakdowns, top users by spend, and usage patterns by day and hour.\n\nLast User Prompt Log:\nThis contains detailed metrics for the most recent prompt, including latency, token usage, spend, prompt/response length, status, model, provider, user/session info, and timestamps.\n\nYour analysis must:\n\nIdentify key trends, anomalies, and optimization opportunities in usage, cost, and performance.\nCompare the last user’s prompt metrics to global averages and highlight any outliers or issues.\nProvide a concise executive summary, a detailed breakdown of findings, and prioritized, actionable recommendations for the admin.\nAddress cost efficiency, latency/performance, user behavior, model utilization, and any risks or improvement areas.\nOutput only a valid JSON object with the following fields:\n\nsummary: Executive summary of the current state.\nfindings: List of key findings, each with a title and detail.\nrecommendations: List of prioritized, actionable recommendations, each with a priority (\"HIGH\", \"MEDIUM\", \"LOW\") and action.\nuser_comparison: Analysis comparing the last user’s prompt to global metrics, highlighting any anomalies or optimization points.\nInstructions:\n\nBe specific and quantitative in your findings.\nHighlight any anomalies, inefficiencies, or optimization opportunities.\nMake recommendations actionable and prioritized for the admin.\nKeep the output concise, structured, and ready for direct use in dashboards or reports.\n",
+        "hasOutputParser": true,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.1,
+      "position": [
+        -336,
+        336
+      ],
+      "id": "f1a8bfd6-7caf-4b6a-b807-07d222b9f6d9",
+      "name": "AI Agent2",
+      "executeOnce": true
+    },
+    {
+      "parameters": {
+        "jsonSchemaExample": "{\n  \"summary\": \"Concise executive summary of system health, usage, and cost.\",\n  \"findings\": [\n    {\n      \"title\": \"Cost Efficiency\",\n      \"detail\": \"Average spend per request is low, with most usage concentrated on the 'gemini-2.5-flash' model. No excessive cost spikes detected.\"\n    },\n    {\n      \"title\": \"Performance\",\n      \"detail\": \"Average latency is 4.3s, with the last user prompt slightly above average at 5.8s. Most requests are successful and within acceptable latency.\"\n    },\n    {\n      \"title\": \"User Behavior\",\n      \"detail\": \"Usage is dominated by a single user. Peak activity occurred on 2025-07-25 at 17:00. No abnormal user activity detected.\"\n    }\n  ],\n  \"recommendations\": [\n    {\n      \"priority\": \"HIGH\",\n      \"action\": \"Monitor the main user for potential overuse and ensure fair resource allocation.\"\n    },\n    {\n      \"priority\": \"MEDIUM\",\n      \"action\": \"Optimize prompt and completion token usage to further reduce costs.\"\n    },\n    {\n      \"priority\": \"LOW\",\n      \"action\": \"Consider promoting usage among more users to balance system load.\"\n    }\n  ],\n  \"user_comparison\": {\n    \"latency_vs_avg\": \"Last user prompt latency (5.8s) is slightly higher than the global average (4.3s).\",\n    \"spend_vs_avg\": \"Last user prompt spend (0.000462) is below the average spend per request (0.00148).\",\n    \"token_usage_vs_avg\": \"Last user used 924 tokens, above the average of 596 tokens per request.\",\n    \"status\": \"success\"\n  }\n}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [
+        -160,
+        736
+      ],
+      "id": "b5e8d7e3-0450-4c70-b45a-8125bd1b6ea6",
+      "name": "Structured Output Parser2"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        -352,
+        736
+      ],
+      "id": "6f7d62c6-bd1e-4e5e-8a3f-5c0452e86edd",
+      "name": "Google Gemini Chat Model2",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "XJWWqBeFMAIOYc91",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "schema": {
+          "__rl": true,
+          "mode": "list",
+          "value": "public"
+        },
+        "table": {
+          "__rl": true,
+          "value": "litellm_logs",
+          "mode": "list",
+          "cachedResultName": "litellm_logs"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "latency_sec": "={{ $json.latency_sec }}",
+            "response_length": "={{ $json.response_length }}",
+            "prompt_length": "={{ $json.prompt_length }}",
+            "id": "={{ $json.id }}"
+          },
+          "matchingColumns": [
+            "id"
+          ],
+          "schema": [
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "request_id",
+              "displayName": "request_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "call_type",
+              "displayName": "call_type",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "spend",
+              "displayName": "spend",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "total_tokens",
+              "displayName": "total_tokens",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "prompt_tokens",
+              "displayName": "prompt_tokens",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "completion_tokens",
+              "displayName": "completion_tokens",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "starttime",
+              "displayName": "starttime",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "dateTime",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "endtime",
+              "displayName": "endtime",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "dateTime",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "completionstarttime",
+              "displayName": "completionstarttime",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "dateTime",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "model",
+              "displayName": "model",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "model_id",
+              "displayName": "model_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "model_group",
+              "displayName": "model_group",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "custom_llm_provider",
+              "displayName": "custom_llm_provider",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "api_base",
+              "displayName": "api_base",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "user_id",
+              "displayName": "user_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "team_id",
+              "displayName": "team_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "end_user",
+              "displayName": "end_user",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "session_id",
+              "displayName": "session_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "status",
+              "displayName": "status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "prompt",
+              "displayName": "prompt",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "proxy_model",
+              "displayName": "proxy_model",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "proxy_messages",
+              "displayName": "proxy_messages",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "proxy_prompt",
+              "displayName": "proxy_prompt",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "response_id",
+              "displayName": "response_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "response_model",
+              "displayName": "response_model",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "response_usage",
+              "displayName": "response_usage",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "response_object",
+              "displayName": "response_object",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "response_choices",
+              "displayName": "response_choices",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "response_created",
+              "displayName": "response_created",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "dateTime",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "response_text",
+              "displayName": "response_text",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "created_at",
+              "displayName": "created_at",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "dateTime",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "security_analysis",
+              "displayName": "security_analysis",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "object",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "performance_cost_analysis",
+              "displayName": "performance_cost_analysis",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "object",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "latency_sec",
+              "displayName": "latency_sec",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "prompt_length",
+              "displayName": "prompt_length",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "response_length",
+              "displayName": "response_length",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        -912,
+        672
+      ],
+      "id": "8fe64fb0-bdf3-44d1-8fbc-9cb9ab544b8f",
+      "name": "Update rows in a table",
+      "credentials": {
+        "postgres": {
+          "id": "qmM1X0jLdqj8MAQr",
+          "name": "Postgres account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        -672,
+        480
+      ],
+      "id": "1632ab96-5f5d-4b8e-87bb-5d894d433c60",
+      "name": "Merge1"
+    },
+    {
+      "parameters": {
+        "jsCode": "const item = items[0].json;\n\n// Use starttime and endtime fields for latency calculation\nconst startTime = new Date(item.starttime);\nconst endTime = new Date(item.endtime);\n\n// Latency in seconds (end - start)\nconst latencySec = (endTime - startTime) / 1000;\n\n// Parse token usage from response_usage string\nlet totalTokens = 0, promptTokens = 0, completionTokens = 0;\nif (item.response_usage) {\n  const match = (key) => {\n    const found = item.response_usage.match(new RegExp(`${key}:(\\\\d+)`));\n    return found ? parseInt(found[1], 10) : 0;\n  };\n  totalTokens = match('total_tokens');\n  promptTokens = match('prompt_tokens');\n  completionTokens = match('completion_tokens');\n}\n\n// Example spend calculation (adjust rate as needed for your provider)\nconst pricePer1kTokens = 0.0005; // Example: $0.0005 per 1k tokens\nconst spend = (totalTokens / 1000) * pricePer1kTokens;\n\n\n\n// ...your existing metrics extraction code...\n\n// Output the main metrics for the first item\nconst output = [\n  {\n    json: {\n      id:item.id,\n      latency_sec: latencySec,\n      prompt_length: item.prompt ? item.prompt.length : 0,\n      response_length: item.response_text ? item.response_text.length : 0,\n  \n     \n    }\n  }\n];\n\n\nreturn output;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -1264,
+        1296
+      ],
+      "id": "e25ae2ca-47e6-4a61-88aa-d0a081289155",
+      "name": "Code"
+    },
+    {
+      "parameters": {
+        "tableId": "litellm_logs",
+        "dataToSend": "autoMapInputData"
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        1184,
+        128
+      ],
+      "id": "0d2e7c9b-36fb-4ed2-8673-889afb8ba66e",
+      "name": "Create a row",
+      "credentials": {
+        "supabaseApi": {
+          "id": "5OevxMPVehqHw7GS",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": []
+        },
+        "includeOtherFields": true,
+        "include": "except",
+        "excludeFields": "id",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        848,
+        144
+      ],
+      "id": "09d7442b-9ccd-4066-93c7-fee99cdfa18e",
+      "name": "Edit Fields1"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT * FROM litellm_logs\nORDER BY id DESC\nLIMIT 1;",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        -1840,
+        784
+      ],
+      "id": "fd6569c5-b65c-46d0-bfd0-870dbb73f930",
+      "name": "Execute a SQL query",
+      "executeOnce": false,
+      "credentials": {
+        "postgres": {
+          "id": "qmM1X0jLdqj8MAQr",
+          "name": "Postgres account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "select",
+        "schema": {
+          "__rl": true,
+          "mode": "list",
+          "value": "public"
+        },
+        "table": {
+          "__rl": true,
+          "value": "litellm_logs",
+          "mode": "list",
+          "cachedResultName": "litellm_logs"
+        },
+        "returnAll": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        -1824,
+        528
+      ],
+      "id": "0c8f96c6-6d17-4ef6-a4c7-07b7fb3d7300",
+      "name": "Select rows from a table",
+      "credentials": {
+        "postgres": {
+          "id": "qmM1X0jLdqj8MAQr",
+          "name": "Postgres account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "c4304349-5ca3-45d2-90fd-efa7c91b0832",
+              "name": "performance_cost_analysis",
+              "value": "={{ $json.output }}",
+              "type": "object"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        16,
+        272
+      ],
+      "id": "e2cce58d-d1d4-4570-bfa5-fc6da7f5bcad",
+      "name": "Edit Fields2"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "UPDATE litellm_logs\nSET performance_cost_analysis = $1::jsonb\nWHERE id = (\n  SELECT id FROM litellm_logs ORDER BY id DESC LIMIT 1\n);",
+        "options": {
+          "queryReplacement": "={{$json.performance_cost_analysis}}"
+        }
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        448,
+        144
+      ],
+      "id": "7f2cb4c7-36bc-41ee-a841-091592660fa6",
+      "name": "Execute a SQL query2",
+      "credentials": {
+        "postgres": {
+          "id": "qmM1X0jLdqj8MAQr",
+          "name": "Postgres account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "return [{\n  json: {\n    performance_cost_analysis: JSON.stringify($json.performance_cost_analysis)\n  }\n}];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        176,
+        192
+      ],
+      "id": "acfea88d-b7fd-48fe-876d-bf1f0f95c4b4",
+      "name": "Code1"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "tableId": "overall_perf",
+        "matchType": "allFilters",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "id",
+              "condition": "eq",
+              "keyValue": "1"
+            }
+          ]
+        },
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "data",
+              "fieldValue": "={{ $json.output }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "518c4503-a713-4e6e-9b42-bddd16b429a6",
+      "name": "Update a row",
+      "credentials": {
+        "supabaseApi": {
+          "id": "5OevxMPVehqHw7GS",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT * FROM litellm_logs\nORDER BY id DESC\nLIMIT 1;",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        656,
+        144
+      ],
+      "id": "542d6582-7686-466f-8746-d70ed3860db5",
+      "name": "Execute a SQL query1",
+      "credentials": {
+        "postgres": {
+          "id": "qmM1X0jLdqj8MAQr",
+          "name": "Postgres account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -2512,
+        784
+      ],
+      "id": "41f19590-1d84-4d8b-882a-3ecd81898e88",
+      "name": "Edit Fields3"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "security analyzer",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request1": {
+      "main": [
+        [
+          {
+            "node": "input2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Insert rows in a table": {
+      "main": [
+        [
+          {
+            "node": "Execute a SQL query",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Select rows from a table",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "prompt logs",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "input1": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "input2": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "performance&cost all prompts": {
+      "main": [
+        [
+          {
+            "node": "AI Agent1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "prompt logs": {
+      "main": [
+        [
+          {
+            "node": "Insert rows in a table",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "security analyzer": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structured Output Parser": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "input1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structured Output Parser1": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "AI Agent1",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent1": {
+      "main": [
+        [
+          {
+            "node": "Merge1",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Update a row",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent1",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structured Output Parser2": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "AI Agent2",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model2": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent2",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge1": {
+      "main": [
+        [
+          {
+            "node": "AI Agent2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code": {
+      "main": [
+        [
+          {
+            "node": "Update rows in a table",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent2": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update rows in a table": {
+      "main": [
+        [
+          {
+            "node": "Merge1",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Create a row": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields1": {
+      "main": [
+        [
+          {
+            "node": "Create a row",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Execute a SQL query": {
+      "main": [
+        [
+          {
+            "node": "Code",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Select rows from a table": {
+      "main": [
+        [
+          {
+            "node": "performance&cost all prompts",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields2": {
+      "main": [
+        [
+          {
+            "node": "Code1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code1": {
+      "main": [
+        [
+          {
+            "node": "Execute a SQL query2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Execute a SQL query2": {
+      "main": [
+        [
+          {
+            "node": "Execute a SQL query1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Execute a SQL query1": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "7e4555fb-d24f-4490-a726-c265ac38a428",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "d2c2d635b09fb1e32beb24a09e17fe1656626b07d3e31f4489b0499f90c12221"
+  },
+  "id": "8FtwMdFARIPN0cyt",
+  "tags": []
+}
